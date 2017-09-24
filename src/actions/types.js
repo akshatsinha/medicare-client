@@ -11,3 +11,12 @@ export const OPEN_EDIT_AGENCY_MODAL = 'open_edit_agency_modal'
 export const CLOSE_EDIT_AGENCY_MODAL = 'close_edit_agency_modal'
 export const OPEN_DEL_AGENCY_MODAL = 'open_del_agency_modal'
 export const CLOSE_DEL_AGENCY_MODAL = 'close_del_agency_modal'
+
+// Office
+export const OFFICE_FETCH = 'office_fetch'
+export const CLOSE_ADD_OFFICE_MODAL = 'close_add_office_modal'
+export const OPEN_ADD_OFFICE_MODAL = 'open_add_office_modal'
+export const OPEN_EDIT_OFFICE_MODAL = 'open_edit_office_modal'
+export const CLOSE_EDIT_OFFICE_MODAL = 'close_edit_office_modal'
+export const OPEN_DEL_OFFICE_MODAL = 'open_del_office_modal'
+export const CLOSE_DEL_OFFICE_MODAL = 'close_del_office_modal'

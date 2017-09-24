@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import classnames from 'classnames'
 import ViewAgencies from './agencies'
+import ViewOffices from './offices'
 
 const AdminPanel = ({ title, link }) => {
   return (
@@ -47,7 +48,7 @@ class Admin extends Component {
             <Row><Col sm="12"><ViewAgencies /></Col></Row>
           </TabPane>
           <TabPane tabId="office_locations">
-            <Row><Col sm="12"><h4>Tab 2 Contents</h4></Col></Row>
+            <Row><Col sm="12"><ViewOffices /></Col></Row>
           </TabPane>
         </TabContent>
       </div>

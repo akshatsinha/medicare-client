@@ -16,9 +16,7 @@ export function signinUser({  email, password }) {
         localStorage.setItem('token', response.data.token)
         browserHistory.push('/profile')
       })
-      .catch(() => {
-        dispatch(authError('Bad Login Info'))
-      })
+      .catch(() => dispatch(authError('Bad Login Info')))
   }
 }
 
@@ -51,12 +49,8 @@ export function fetchMessage() {
   return function(dispatch) {
     return axios.get(config.API_URL, {
       headers: { authorization: 'Bearer ' + localStorage.getItem('token') }
+    }).then(response => {
+      dispatch({ type: FETCH_MESSAGE, payload: response.data.message })
     })
-      .then(response => {
-        dispatch({
-          type: FETCH_MESSAGE,
-          payload: response.data.message
-        })
-      })
   }
 }
