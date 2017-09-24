@@ -1,7 +1,6 @@
-# ipondemand-client
+# medicare-client
 
 ```
 > npm install
 > npm start
 ```
-# medicare-client

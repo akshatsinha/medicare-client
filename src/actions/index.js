@@ -6,12 +6,11 @@ import {
   UNAUTH_USER,
   FETCH_MESSAGE
 } from '../actions/types'
-
-const API_URL = 'http://localhost:3090'
+import config from '../../config'
 
 export function signinUser({  email, password }) {
   return function(dispatch) {
-    axios.post(`${API_URL}/signin`, { email, password })
+    return axios.post(`${config.API_URL}/signin`, { email, password })
       .then(response => {
         dispatch({ type: AUTH_USER })
         localStorage.setItem('token', response.data.token)
@@ -25,7 +24,7 @@ export function signinUser({  email, password }) {
 
 export function signupUser(formProps) {
   return function(dispatch) {
-    axios.post(`${API_URL}/signup`, formProps)
+    return axios.post(`${config.API_URL}/signup`, formProps)
       .then(response => {
         dispatch({ type: AUTH_USER })
         localStorage.setItem('token', response.data.token)
@@ -50,7 +49,7 @@ export function authError(error) {
 
 export function fetchMessage() {
   return function(dispatch) {
-    axios.get(API_URL, {
+    return axios.get(config.API_URL, {
       headers: { authorization: 'Bearer ' + localStorage.getItem('token') }
     })
       .then(response => {

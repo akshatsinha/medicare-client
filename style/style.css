@@ -1,3 +1,52 @@
 .error {
   color: #dc3545
 }
+
+input.error {
+  border: 1px solid #dc3545;
+}
+
+.nav-item {
+  cursor: pointer;
+}
+
+.nav>li>a:hover {
+  background-color: none;
+}
+
+.nav-tabs>li>a:hover {
+  border-color: none;
+}
+
+.nav-link.active {
+  color: #464a4c;
+  background-color: #fff;
+  border-color: #ddd #ddd #fff;
+}
+
+.td-agency {
+  vertical-align: middle !important;
+  font-size: 15px;
+}
+
+.btn-add-agency {
+  margin-top: 18px;
+  margin-bottom: 18px;
+  float: right;
+}
+
+.btn-edit-agency {
+  float: right;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.admin-panel-tabs {
+  margin-top: 30px;
+}
+
+.no-agency-msg {
+  padding-top: 100px;
+}
