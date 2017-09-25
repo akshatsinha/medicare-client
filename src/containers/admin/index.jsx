@@ -6,18 +6,6 @@ import classnames from 'classnames'
 import ViewAgencies from './agencies'
 import ViewOffices from './offices'
 
-const AdminPanel = ({ title, link }) => {
-  return (
-    <Link to={link}>
-      <div className="panel panel-default">
-        <div className="panel-body">
-          { title }
-        </div>
-      </div>
-    </Link>
-  )
-}
-
 class Admin extends Component {
   constructor(props) {
     super(props)

@@ -37,6 +37,10 @@ input.error {
   float: right;
 }
 
+.btn-add-inward {
+  margin-top: 18px;
+}
+
 .btn-edit-agency,
 .btn-edit-office {
   float: right;
@@ -46,11 +50,27 @@ input.error {
   cursor: pointer;
 }
 
-.admin-panel-tabs {
+.admin-panel-tabs,
+.inwards-panel-tabs {
   margin-top: 30px;
 }
 
 .no-agency-msg,
 .no-office-msg {
   padding-top: 100px;
+}
+
+.input-dt {
+  margin-right: 10px;
+}
+
+.dd-toggle {
+  width: 50%;
+  display: block;
+  text-align: left !important;
+}
+
+.dropdown-toggle::after {
+  float: right;
+  margin-top: 7px;
 }

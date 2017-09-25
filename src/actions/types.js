@@ -20,3 +20,7 @@ export const OPEN_EDIT_OFFICE_MODAL = 'open_edit_office_modal'
 export const CLOSE_EDIT_OFFICE_MODAL = 'close_edit_office_modal'
 export const OPEN_DEL_OFFICE_MODAL = 'open_del_office_modal'
 export const CLOSE_DEL_OFFICE_MODAL = 'close_del_office_modal'
+
+// Inwards
+export const OPEN_ADD_INWARD_MODAL = 'open_add_inward_modal'
+export const CLOSE_ADD_INWARD_MODAL = 'close_add_inward_modal'

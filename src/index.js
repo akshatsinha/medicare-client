@@ -9,6 +9,7 @@ import App from './containers/App'
 import Admin from './containers/admin'
 import Profile from './containers/Profile'
 import Welcome from './components/Welcome'
+import Inwards from './containers/inwards/index'
 import Signin from './containers/auth/Signin'
 import Signup from './containers/auth/Signup'
 import Signout from './containers/auth/Signout'
@@ -36,6 +37,7 @@ ReactDOM.render(
         <Route path="sign-up" component={Signup} />
         <Route path="sign-out" component={Signout} />
         <Route path="admin" component={RequireAuth(Admin)} />
+        <Route path="inwards" component={RequireAuth(Inwards)} />
         <Route path="profile" component={RequireAuth(Profile)} />
       </Route>
       <App />

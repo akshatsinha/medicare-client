@@ -9,7 +9,7 @@ import {
 } from '../actions/types'
 
 const defaultState = {
-  all: {},
+  all: [],
   add_agency_is_open: false,
   edit_agency_is_open: false,
   del_agency_is_open: false

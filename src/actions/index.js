@@ -14,7 +14,7 @@ export function signinUser({  email, password }) {
       .then(response => {
         dispatch({ type: AUTH_USER })
         localStorage.setItem('token', response.data.token)
-        browserHistory.push('/profile')
+        browserHistory.push('/')
       })
       .catch(() => dispatch(authError('Bad Login Info')))
   }
