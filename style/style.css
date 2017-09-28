@@ -74,3 +74,33 @@ input.error {
   float: right;
   margin-top: 7px;
 }
+
+.force-no-left-padding {
+  padding-left: 0 !important;
+}
+
+.info-payment-text {
+  font-size: 14px;
+  color: red;
+  padding-bottom: 10px;
+}
+
+.amt-green {
+  color: green;
+}
+
+.amt-red {
+  color: red;
+}
+
+.no-padding-on-sides {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

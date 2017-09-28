@@ -8,7 +8,6 @@ import classnames from 'classnames'
 import { OPEN_ADD_AGENCY_MODAL, CLOSE_ADD_AGENCY_MODAL, OPEN_EDIT_AGENCY_MODAL, CLOSE_EDIT_AGENCY_MODAL, OPEN_DEL_AGENCY_MODAL, CLOSE_DEL_AGENCY_MODAL } from '../../../actions/types'
 import { createAgency, fetchAgencies, updateAgency, deleteAgency } from '../../../actions/agencies'
 import RenderInput from '../../../components/RenderInput'
-import 'bootstrap/dist/css/bootstrap.css'
 
 class Agencies extends Component {
   constructor(props) {
