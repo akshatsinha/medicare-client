@@ -24,3 +24,5 @@ export const CLOSE_DEL_OFFICE_MODAL = 'close_del_office_modal'
 // Inwards
 export const OPEN_ADD_INWARD_MODAL = 'open_add_inward_modal'
 export const CLOSE_ADD_INWARD_MODAL = 'close_add_inward_modal'
+export const FETCH_VIEW_BY_AGENCIES = 'fetch_view_by_agencies'
+export const FETCH_VIEW_BY_OFFICES = 'fetch_view_by_offices'
