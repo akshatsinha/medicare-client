@@ -5,7 +5,8 @@ import {
   OPEN_ADD_INWARD_MODAL,
   CLOSE_ADD_INWARD_MODAL,
   FETCH_VIEW_BY_AGENCIES,
-  FETCH_VIEW_BY_OFFICES
+  FETCH_VIEW_BY_OFFICES,
+  HIDE_EDIT_INWARD_MODAL
 } from '../actions/types'
 
 export function createInward(inwardObj) {
@@ -44,12 +45,16 @@ export function viewByOffices() {
   }
 }
 
-export function udpateInward() {
+export function updateInward(inwardObj, src) {
   return function(dispatch) {
-    return axios.post(`${config.API_URL}/inward/view-by-offices`, inwardObj, {
+    return axios.post(`${config.API_URL}/inward/update/${inwardObj._id}`, {inwardObj, src}, {
       headers: { authorization: 'Bearer ' + localStorage.getItem('token') }
     }).then(response => {
-      dispatch({ type: CLOSE_EDIT_INWARD_MODAL })
+      let sortedPeriodKeys = orderBy(Object.keys(response.data), ['desc'])
+      let sortedPeriodData = []
+      sortedPeriodKeys.forEach(periodKey => sortedPeriodData.push(response.data[periodKey]))
+      dispatch({ type: HIDE_EDIT_INWARD_MODAL })
+      dispatch({ type: src === 'agency' ? FETCH_VIEW_BY_AGENCIES : FETCH_VIEW_BY_OFFICES, payload: sortedPeriodData })
     })
   }
 }

@@ -1,35 +1,58 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import classnames from 'classnames'
 import DatePicker from 'react-datepicker'
+import { bindActionCreators } from 'redux'
 import { Button, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { HIDE_EDIT_INWARD_MODAL } from '../../actions/types'
+import { updateInward } from '../../actions/inwards'
 
 class EditInward extends Component {
   constructor(props) {
     super(props)
+    this.updateInward = this.updateInward.bind(this)
     this.handleBillDateSelect = this.handleBillDateSelect.bind(this)
     this.handleBillRcdDateChange = this.handleBillRcdDateChange.bind(this)
     this.handleBillRcdDateOnBlur = this.handleBillRcdDateOnBlur.bind(this)
     this.handleBillRcdDateSelect = this.handleBillRcdDateSelect.bind(this)
     this.handleBillPaidDateSelect = this.handleBillPaidDateSelect.bind(this)
 
-    const { bill_rcd_dt, bill_no, bill_dt, dd_agency_id, dd_office_id, bill_amt, bill_pd_dt, bill_pd_amt } = this.props.inward
+    const { _id, bill_rcd_dt, bill_no, bill_dt, dd_agency_id, dd_office_id, bill_amt, bill_pd_dt, bill_pd_amt } = this.props.inward
     this.state = {
       showEditInwardForm: true,
       showMissingRcdDateError: false,
+      _id,
       bill_rcd_dt: bill_rcd_dt !== '' ? moment(bill_rcd_dt, 'DD-MM-YYYY') : '',
-      bill_no: bill_no,
+      bill_no,
       bill_dt: bill_dt !== '' ? moment(bill_dt, 'DD-MM-YYYY') : '',
       agencyDropdownIsOpen: false,
-      dd_agency_id: dd_agency_id,
+      dd_agency_id,
       dd_agency_name: this.props.agencyIdToName[dd_agency_id],
       officeDropdownIsOpen: false,
-      dd_office_id: dd_office_id,
+      dd_office_id,
       dd_office_name: this.props.officeIdToName[dd_office_id],
-      bill_amt: bill_amt,
+      bill_amt,
       bill_pd_dt: bill_pd_dt !== '' ? moment(bill_pd_dt, 'DD-MM-YYYY') : '',
-      bill_pd_amt: bill_pd_amt
+      bill_pd_amt
     }
+  }
+
+  updateInward() {
+    const { _id, bill_rcd_dt, bill_no, bill_dt, dd_agency_id, dd_office_id, bill_amt, bill_pd_dt, bill_pd_amt } = this.state
+    const submitInwardPayload = {
+      _id,
+      bill_rcd_dt: bill_rcd_dt === null ? '' : bill_rcd_dt !== '' ? moment(bill_rcd_dt).format('DD-MM-YYYY') : '',
+      bill_no,
+      bill_dt: bill_dt === null ? '' : bill_dt !== '' ? moment(bill_dt).format('DD-MM-YYYY') : '',
+      dd_agency_id,
+      dd_office_id,
+      bill_amt,
+      bill_pd_dt: bill_pd_dt === null ? '' : bill_pd_dt !== '' ? moment(bill_pd_dt).format('DD-MM-YYYY') : '',
+      bill_pd_amt
+    }
+    console.log('To Be Updated: ', submitInwardPayload)
+    this.props.updateInward(submitInwardPayload, this.props.src)
   }
 
   handleBillRcdDateSelect(date) {
@@ -149,8 +172,8 @@ class EditInward extends Component {
         </ModalBody>
 
         <ModalFooter>
-          <Button color="primary" action='submit' className='btn btn-primary' disabled={ !this.state.bill_rcd_dt }>Update Inward</Button>
-          <Button color="secondary" onClick={this.props.toggleEditModal}>Cancel</Button>
+          <Button color="primary" onClick={this.updateInward} className='btn btn-primary' disabled={!this.state.bill_rcd_dt}>Update Inward</Button>
+          <Button color="secondary" onClick={() => this.props.dispatch({ type: HIDE_EDIT_INWARD_MODAL })}>Cancel</Button>
         </ModalFooter>
 
       </Modal>
@@ -158,4 +181,11 @@ class EditInward extends Component {
   }
 }
 
-export default EditInward
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    updateInward,
+    dispatch
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(EditInward)

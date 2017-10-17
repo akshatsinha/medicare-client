@@ -2,7 +2,9 @@ import {
   OPEN_ADD_INWARD_MODAL,
   CLOSE_ADD_INWARD_MODAL,
   FETCH_VIEW_BY_AGENCIES,
-  FETCH_VIEW_BY_OFFICES
+  FETCH_VIEW_BY_OFFICES,
+  SHOW_EDIT_INWARD_MODAL,
+  HIDE_EDIT_INWARD_MODAL
 } from '../actions/types'
 
 const defaultState = {
@@ -24,6 +26,10 @@ export default function (state = defaultState, action) {
       return { ...state, agency_periods: action.payload }
     case FETCH_VIEW_BY_OFFICES:
       return { ...state, office_periods: action.payload }
+    case SHOW_EDIT_INWARD_MODAL:
+      return { ...state, edit_inward_is_open: true }
+    case HIDE_EDIT_INWARD_MODAL:
+      return { ...state, edit_inward_is_open: false }
   }
 
   return state

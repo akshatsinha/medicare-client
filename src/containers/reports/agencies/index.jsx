@@ -4,40 +4,33 @@ import { Row, Col, Table, Button } from 'reactstrap'
 import { bindActionCreators } from 'redux'
 import { viewByAgencies } from '../../../actions/inwards'
 import EditInward from '../../inwards/EditInward'
+import { SHOW_EDIT_INWARD_MODAL } from '../../../actions/types'
 
 class ReportByAgenciesIndex extends Component {
   constructor(props) {
     super(props)
     this.editInward = this.editInward.bind(this)
     this.showPeriodData = this.showPeriodData.bind(this)
-    this.toggleEditModal = this.toggleEditModal.bind(this)
     this.state = {
       showCards: true,
-      periodTableData: '',
       inwardToEdit: null,
+      periodToShow: null,
       showEditInwardModal: false
     }
   }
 
   componentDidMount() {
     this.props.viewByAgencies()
-  }
-
-  componentWillMount() {
-    this.setState({ showCards: true, periodTableData: '' })
+    this.setState({ showCards: true })
   }
 
   showPeriodData(agencyPeriod) {
-    console.log('*****> ', agencyPeriod)
-    this.setState({ showCards: false, periodTableData: agencyPeriod })
+    this.setState({ showCards: false, periodToShow: agencyPeriod.canonical_period })
   }
 
   editInward(inward) {
-    this.setState({ showEditInwardModal: true, inwardToEdit: inward })
-  }
-
-  toggleEditModal() {
-    this.setState({ showEditInwardModal: !this.state.showEditInwardModal })
+    this.props.dispatch({ type: SHOW_EDIT_INWARD_MODAL })
+    this.setState({ inwardToEdit: inward })
   }
 
   render() {
@@ -59,9 +52,9 @@ class ReportByAgenciesIndex extends Component {
     return (
       <div>
         {
-          this.state.showEditInwardModal &&
+          this.props.edit_inward_is_open &&
           <EditInward inward={this.state.inwardToEdit} agencyIdToName={agencyIdToName} officeIdToName={officeIdToName}
-            agencies={this.props.agencies} offices={this.props.offices} toggleEditModal={this.toggleEditModal} />
+            agencies={this.props.agencies} offices={this.props.offices} src="agency" />
         }
         <div className="tab-content-top-margin">
           <Row>
@@ -83,57 +76,60 @@ class ReportByAgenciesIndex extends Component {
             })
           }
           {
-            !this.state.showCards && this.state.periodTableData && this.state.periodTableData.inwards &&
-            <div>
-              <h4>Inwards for { this.state.periodTableData.canonical_period }</h4>
-              {
-                Object.keys(this.state.periodTableData.by_agency).map((agencyId, idx) => {
-                  return (
-                    <div key={idx}>
-                      <h5 className="tab-content-top-margin">{ agencyIdToName[agencyId] }</h5>
-                      <Table striped key={idx}>
-                        <thead>
-                          <tr key={idx}>
-                            <th>Recd. Dt</th>
-                            <th>Bill No.</th>
-                            <th>Bill Dt.</th>
-                            <th>Agency</th>
-                            <th>Location</th>
-                            <th>Amt</th>
-                            <th>Amt Pd.</th>
-                            <th>Balance</th>
-                            <th>Amt. Pd. Dt</th>
-                            <th></th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        {
-                          this.state.periodTableData.by_agency[agencyId].map((periodData, indx) => {
-                            return (
-                              <tr key={indx}>
-                                <td>{ periodData.bill_rcd_dt }</td>
-                                <td>{ periodData.bill_no }</td>
-                                <td>{ periodData.bill_dt }</td>
-                                <td>{ agencyIdToName[periodData.dd_agency_id] }</td>
-                                <td>{ officeIdToName[periodData.dd_office_id] }</td>
-                                <td>{ periodData.bill_amt }</td>
-                                <td>{ periodData.bill_pd_amt }</td>
-                                <td>{ periodData.bill_amt - periodData.bill_pd_amt }</td>
-                                <td>{ periodData.bill_pd_dt }</td>
-                                <td></td>
-                                <td><Button color="warning" onClick={() => this.editInward(periodData)}>Edit</Button></td>
+            !this.state.showCards && this.props.agency_periods.filter(agencyPeriod => agencyPeriod.canonical_period == this.state.periodToShow).map((agencyPeriod, idx) => {
+              return (
+                <div key={idx}>
+                  <h4>Inwards for { agencyPeriod.canonical_period }</h4>
+                  {
+                    Object.keys(agencyPeriod.by_agency).map((agencyId, idx) => {
+                      return (
+                        <div key={idx}>
+                          <h5 className="tab-content-top-margin">{ agencyIdToName[agencyId] }</h5>
+                          <Table striped key={idx}>
+                            <thead>
+                              <tr key={idx}>
+                                <th>Recd. Dt</th>
+                                <th>Bill No.</th>
+                                <th>Bill Dt.</th>
+                                <th>Agency</th>
+                                <th>Location</th>
+                                <th>Amt</th>
+                                <th>Amt Pd.</th>
+                                <th>Balance</th>
+                                <th>Amt. Pd. Dt</th>
+                                <th></th>
+                                <th></th>
                               </tr>
-                            )
-                          })
-                        }
-                        </tbody>
-                      </Table>
-                    </div>
-                  )
-                })
-              }
-            </div>
+                            </thead>
+                            <tbody>
+                            {
+                              agencyPeriod.by_agency[agencyId].map((periodData, indx) => {
+                                return (
+                                  <tr key={indx}>
+                                    <td>{ periodData.bill_rcd_dt }</td>
+                                    <td>{ periodData.bill_no }</td>
+                                    <td>{ periodData.bill_dt }</td>
+                                    <td>{ agencyIdToName[periodData.dd_agency_id] }</td>
+                                    <td>{ officeIdToName[periodData.dd_office_id] }</td>
+                                    <td>{ periodData.bill_amt }</td>
+                                    <td>{ periodData.bill_pd_amt }</td>
+                                    <td>{ periodData.bill_amt - periodData.bill_pd_amt }</td>
+                                    <td>{ periodData.bill_pd_dt }</td>
+                                    <td></td>
+                                    <td><Button color="warning" onClick={() => this.editInward(periodData)}>Edit</Button></td>
+                                  </tr>
+                                )
+                              })
+                            }
+                            </tbody>
+                          </Table>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              )
+            })
           }
           </Row>
         </div>
@@ -146,7 +142,8 @@ function mapStateToProps(state) {
   return {
     agency_periods: state.inwards.agency_periods,
     agencies: state.agencies.all,
-    offices: state.offices.all
+    offices: state.offices.all,
+    edit_inward_is_open: state.inwards.edit_inward_is_open
   }
 }
 
